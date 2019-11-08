@@ -30,7 +30,11 @@ function generateCircles(ctx) {
           x: x + parseInt(offsetX / 2),
           y: y + parseInt(offsetY / 2)
         },
-        radius: (Math.sin(x/ctx.canvas.width)*Math.sin(y/ctx.canvas.height))**2
+        percents: {
+          x: x / ctx.canvas.width,
+          y: y / ctx.canvas.height
+        },
+        radius: 30 * Math.sin(Math.PI * x / ctx.canvas.width) * Math.sin(Math.PI * y / ctx.canvas.height)
       }
       row.push(circle)
     }
@@ -39,7 +43,7 @@ function generateCircles(ctx) {
   return circles
 }
 
-function draw(ctx) {
+function draw(ctx, circles) {
   clear(ctx)
   ctx.canvas.width = parseInt(window.getComputedStyle(ctx.canvas).width)
   ctx.canvas.height = parseInt(window.getComputedStyle(ctx.canvas).height)
@@ -56,9 +60,18 @@ function draw(ctx) {
       ctx.fill() */
     }
   }
+  for (row of circles) {
+      for (circle of row) {
+      ctx.fillStyle = 'rgba(255, 0, 0, 0.5)'
+      ctx.moveTo(circle.center.x, circle.center.y)
+      ctx.beginPath()
+      ctx.arc(circle.center.x, circle.center.y, circle.radius, 0, 2 * Math.PI)
+      ctx.closePath()
+      ctx.fill()
+    }) 
+  }
 }
 draw(ctx)
 window.addEventListener('resize', () => {
-  draw(ctx)
-  console.log(generateCircles(ctx))
+  draw(ctx, generateCircles(ctx))
 });
