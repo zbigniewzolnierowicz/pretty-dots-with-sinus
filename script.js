@@ -3,10 +3,6 @@ let ctx
 if ('getContext' in canvas) {
   ctx = canvas.getContext('2d')
 }
-let amounts = {
-  columns: 16,
-  rows: 9
-}
 
 function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -16,7 +12,7 @@ function clear(ctx) {
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 }
 
-function generateCircles(ctx, maxDotSize = 12, isLandscape = true) {
+function generateCircles(ctx, amounts, maxDotSize = 12, isLandscape = true) {
   ctx.canvas.width = parseInt(window.getComputedStyle(ctx.canvas).width)
   ctx.canvas.height = parseInt(window.getComputedStyle(ctx.canvas).height)
   let offsetX = ctx.canvas.width / (isLandscape ? amounts.columns : amounts.rows)
@@ -61,11 +57,19 @@ function render(ctx, maxDotSize) {
     width: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
     height: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
   }
-  if (window.screen.width < window.screen.height) {
+  if (dimensions.width < dimensions.height) {
     isLandscape = false
   }
+  let amounts = {
+    columns: 16,
+    rows: 9
+  }
+  if (window.matchMedia('(aspect-ratio: 1/1)').matches) {
+    columns: 16,
+    rows
+  }
   clear(ctx)
-  let circles = generateCircles(ctx, maxDotSize, isLandscape)
+  let circles = generateCircles(ctx, amounts, maxDotSize, isLandscape)
   draw(ctx, circles)
 }
 
