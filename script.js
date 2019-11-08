@@ -27,7 +27,7 @@ function draw(ctx) {
       ctx.fillStyle = 'rgba(255, 0, 0, 0.5)'
       ctx.moveTo(x + parseInt(offsetX / 2), y + parseInt(offsetY / 2))
       ctx.beginPath()
-      ctx.arc(x + parseInt(offsetX / 2), y + parseInt(offsetY / 2), randomIntFromInterval(0, offsetY / 2), 0, 2 * Math.PI)
+      ctx.arc(x + parseInt(offsetX / 2), y + parseInt(offsetY / 2), Math.sin(x)**2 * 20, 0, 2 * Math.PI)
       ctx.closePath()
       ctx.fill()
     }
