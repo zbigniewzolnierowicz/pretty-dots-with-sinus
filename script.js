@@ -3,9 +3,9 @@ let ctx
 if ('getContext' in canvas) {
   ctx = canvas.getContext('2d')
 }
-const AMOUNT_OF_TRIANGLES = {
-  COLUMNS: 16,
-  ROWS: 9
+let amounts = {
+  columns: 16,
+  rows: 9
 }
 
 function randomIntFromInterval(min, max) {
@@ -16,11 +16,11 @@ function clear(ctx) {
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 }
 
-function generateCircles(ctx, maxDotSize = 12) {
+function generateCircles(ctx, maxDotSize = 12, isLandscape = true) {
   ctx.canvas.width = parseInt(window.getComputedStyle(ctx.canvas).width)
   ctx.canvas.height = parseInt(window.getComputedStyle(ctx.canvas).height)
-  let offsetX = ctx.canvas.width / AMOUNT_OF_TRIANGLES.COLUMNS
-  let offsetY = ctx.canvas.height / AMOUNT_OF_TRIANGLES.ROWS
+  let offsetX = ctx.canvas.width / (isLandscape ? amounts.columns : amounts.rows)
+  let offsetY = ctx.canvas.height / (isLandscape ? amounts.rows : amounts.columns)
   let circles = []
   for(let x = 0; x <= ctx.canvas.width; x+=offsetX) {
     let row = []
@@ -43,8 +43,6 @@ function draw(ctx, circles) {
   clear(ctx)
   ctx.canvas.width = parseInt(window.getComputedStyle(ctx.canvas).width)
   ctx.canvas.height = parseInt(window.getComputedStyle(ctx.canvas).height)
-  let offsetX = ctx.canvas.width / AMOUNT_OF_TRIANGLES.COLUMNS
-  let offsetY = ctx.canvas.height / AMOUNT_OF_TRIANGLES.ROWS
   for (let row of circles) {
     for (let circle of row) {
       ctx.moveTo(0,0)
@@ -55,16 +53,24 @@ function draw(ctx, circles) {
       ctx.fill()
     }
   }
-  console.log(circles)
 }
-let circles = generateCircles(ctx, 6)
-draw(ctx, circles)
 
 function render(ctx, maxDotSize) {
-  console.log(window.screen.orientation)
+  let isLandscape = true
+  let dimensions = {
+    width: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+    height: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+  }
+  if (window.screen.width < window.screen.height) {
+    isLandscape = false
+  }
+  clear(ctx)
+  let circles = generateCircles(ctx, maxDotSize, isLandscape)
+  draw(ctx, circles)
 }
 
+render(ctx, 6)
+
 window.addEventListener('resize', () => {
-  let circles = generateCircles(ctx, 6)
-  draw(ctx, circles)
+  render(ctx, 6)
 });
