@@ -8,21 +8,30 @@ const AMOUNT_OF_TRIANGLES = {
   COLUMNS: 10
 }
 
-ctx.canvas.width = parseInt(window.getComputedStyle(ctx.canvas).width)
-ctx.canvas.height = parseInt(window.getComputedStyle(ctx.canvas).height)
-
-const offsetX = parseInt(window.getComputedStyle(ctx.canvas).width) / AMOUNT_OF_TRIANGLES.COLUMNS
-const offsetY = parseInt(window.getComputedStyle(ctx.canvas).height) / AMOUNT_OF_TRIANGLES.ROWS
-
-function randomIntFromInterval(min, max) { // min and max included 
+function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
-for(let x = 0; x < ctx.canvas.width; x+=offsetX) {
-  for(let y = 0; y < ctx.canvas.height; y+=offsetY) {
-    ctx.moveTo(x + parseInt(offsetX / 2), y + parseInt(offsetY / 2))
-    ctx.beginPath()
-    ctx.arc(x + parseInt(offsetX / 2), )
-    ctx.closePath()
-    ctx.fill()
+
+function clear(ctx) {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+}
+
+function draw(ctx) {
+  clear(ctx)
+  ctx.fillStyle = '#00000020'
+  ctx.canvas.width = parseInt(window.getComputedStyle(ctx.canvas).width)
+  ctx.canvas.height = parseInt(window.getComputedStyle(ctx.canvas).height)
+  let offsetX = ctx.canvas.width / AMOUNT_OF_TRIANGLES.COLUMNS
+  let offsetY = ctx.canvas.height / AMOUNT_OF_TRIANGLES.ROWS
+  for(let x = 0, xi = 0; x < ctx.canvas.width; x+=offsetX, xi++) {
+    for(let y = 0, yi = 0; y < ctx.canvas.height; y+=offsetY, yi++) {
+      ctx.moveTo(x + parseInt(offsetX / 2), y + parseInt(offsetY / 2))
+      ctx.beginPath()
+      ctx.arc(x + parseInt(offsetX / 2), y + parseInt(offsetY / 2), randomIntFromInterval(0, offsetY / 2), 0, 2 * Math.PI)
+      ctx.closePath()
+      ctx.fill()
+    }
   }
 }
+
+window.addEventListener('resize', () => draw(ctx));
