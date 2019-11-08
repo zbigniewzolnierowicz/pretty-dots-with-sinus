@@ -24,7 +24,7 @@ function draw(ctx) {
   let offsetY = ctx.canvas.height / AMOUNT_OF_TRIANGLES.ROWS
   for(let x = 0; x < ctx.canvas.width; x+=offsetX) {
     for(let y = 0; y < ctx.canvas.height; y+=offsetY) {
-      ctx.fillStyle = 'rgba(255, 0, 0, 127)'
+      ctx.fillStyle = 'rgba(255, 0, 0, 0.5)'
       ctx.moveTo(x + parseInt(offsetX / 2), y + parseInt(offsetY / 2))
       ctx.beginPath()
       ctx.arc(x + parseInt(offsetX / 2), y + parseInt(offsetY / 2), randomIntFromInterval(0, offsetY / 2), 0, 2 * Math.PI)
@@ -33,5 +33,5 @@ function draw(ctx) {
     }
   }
 }
-
+draw(ctx)
 window.addEventListener('resize', () => draw(ctx));
