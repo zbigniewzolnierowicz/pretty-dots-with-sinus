@@ -65,8 +65,25 @@ function render(ctx, maxDotSize) {
     rows: 9
   }
   if (window.matchMedia('(aspect-ratio: 1/1)').matches) {
-    columns: 16,
-    rows
+    amounts = {
+      columns: 16,
+      rows: 16
+    }
+  } else if (window.matchMedia('(aspect-ratio: 3/2)').matches || window.matchMedia('(aspect-ratio: 2/3)').matches) {
+    amounts = {
+      columns: 16,
+      rows: 11
+    }
+  } else if (window.matchMedia('(aspect-ratio: 21/9)').matches || window.matchMedia('(aspect-ratio: 9/21)').matches) {
+    amounts = {
+      columns: 21,
+      rows: 9
+    }
+  } else if (window.matchMedia('(aspect-ratio: 4/3)').matches || window.matchMedia('(aspect-ratio: 3/4)').matches) {
+    amounts = {
+      columns: 16,
+      rows: 12
+    }
   }
   clear(ctx)
   let circles = generateCircles(ctx, amounts, maxDotSize, isLandscape)
