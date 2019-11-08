@@ -25,12 +25,11 @@ function draw(ctx) {
   for(let x = 0; x < ctx.canvas.width; x+=offsetX) {
     for(let y = 0; y < ctx.canvas.height; y+=offsetY) {
       ctx.fillStyle = 'rgba(255, 0, 0, 0.5)'
-      ctx.fillRect(x + parseInt(offsetX / 2), y + parseInt(offsetY / 2), 2, 2)
-      // ctx.moveTo(x + parseInt(offsetX / 2), y + parseInt(offsetY / 2))
-      // ctx.beginPath()
-      // ctx.arc(x + parseInt(offsetX / 2), y + parseInt(offsetY / 2), 20 * (Math.cos((x / ctx.canvas.width) * 2 * Math.PI) * Math.cos((y / ctx.canvas.height) * 2 * Math.PI), 0, 2 * Math.PI)
-      // ctx.closePath()
-      // ctx.fill()
+      ctx.moveTo(x + parseInt(offsetX / 2), y + parseInt(offsetY / 2))
+      ctx.beginPath()
+      ctx.arc(x + parseInt(offsetX / 2), y + parseInt(offsetY / 2), 10 * (Math.sin(x)*Math.sin(y))**2, 0, 2 * Math.PI)
+      ctx.closePath()
+      ctx.fill()
     }
   }
 }
