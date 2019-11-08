@@ -18,13 +18,13 @@ function clear(ctx) {
 
 function draw(ctx) {
   clear(ctx)
-  ctx.fillStyle = '#00000020'
   ctx.canvas.width = parseInt(window.getComputedStyle(ctx.canvas).width)
   ctx.canvas.height = parseInt(window.getComputedStyle(ctx.canvas).height)
   let offsetX = ctx.canvas.width / AMOUNT_OF_TRIANGLES.COLUMNS
   let offsetY = ctx.canvas.height / AMOUNT_OF_TRIANGLES.ROWS
-  for(let x = 0, xi = 0; x < ctx.canvas.width; x+=offsetX, xi++) {
-    for(let y = 0, yi = 0; y < ctx.canvas.height; y+=offsetY, yi++) {
+  for(let x = 0; x < ctx.canvas.width; x+=offsetX) {
+    for(let y = 0; y < ctx.canvas.height; y+=offsetY) {
+      ctx.fillStyle = 'rgba(255, 0, 0, 127)'
       ctx.moveTo(x + parseInt(offsetX / 2), y + parseInt(offsetY / 2))
       ctx.beginPath()
       ctx.arc(x + parseInt(offsetX / 2), y + parseInt(offsetY / 2), randomIntFromInterval(0, offsetY / 2), 0, 2 * Math.PI)
